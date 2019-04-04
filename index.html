@@ -1,0 +1,36 @@
+<html>
+  <head>
+    <script src="/mqtt.js"></script>
+  </head>
+  <body>
+    <h1>This is a mqtt webpage<h1>
+	<input type="text" id="msg"/>
+	<input type="button" value="publish" onclick="send()"/>
+	
+    <script>
+      var client = mqtt.connect();
+
+      client.subscribe("testpublish");
+
+      client.on("message", function(topic, payload) {
+        alert([topic, payload].join(": "));
+      });
+
+      //client.publish("webpublish", "haiya!");
+	  
+	  function send(){
+			var msg = document.getElementById("msg").value;
+			if(msg.length > 0){
+ 
+				client.publish("webpublish", msg);
+				document.getElementById("msg").value = "";
+				console.log("消息发送成功"+s);
+			}
+			else {
+				alert("发送的消息不能为空");
+			}
+		}
+
+    </script>
+  </body>
+</html>
